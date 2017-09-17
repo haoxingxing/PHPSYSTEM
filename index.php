@@ -4,18 +4,18 @@ function  write ($filename,$word,$error_report="No Set Error Msg"){
 	$WriteFile=fopen($filename,"w") or die($error_report);
 	fwrite($WriteFile,$word);
 	fclose($WriteFile);
-	file_put_contents("server.log",microtime(1)."  ".$filename." << '".$word."'\r\n",FILE_APPEND);	
+	file_put_contents("server.log",$_SERVER['REMOTE_ADDR'].":".$_SERVER['REMOTE_PORT']."  ->  ".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."  ".$_SERVER['REQUEST_METHOD']."  ".microtime(1)."  ".$filename." << '".$word."'\r\n",FILE_APPEND);	
 }
 function  read ($filename,$error_report="No Set Error Msg"){
 	$WriteFile=fopen($filename,"r") or die($error_report);
 	$word=fread($WriteFile,filesize($filename));
 	fclose($WriteFile);
-	file_put_contents("server.log",microtime(1)."  ".$filename." >> '".$word."'\r\n",FILE_APPEND);		
+	file_put_contents("server.log",$_SERVER['REMOTE_ADDR'].":".$_SERVER['REMOTE_PORT']."  ->  ".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."  ".$_SERVER['REQUEST_METHOD']."  ".microtime(1)."  ".$filename." >> '".$word."'\r\n",FILE_APPEND);		
 	return $word;
 }
 function  jumpurl($url)
 {
-	file_put_contents("server.log",microtime(1)."  Redirect  >> '".$url."'\r\n",FILE_APPEND);			
+	file_put_contents("server.log",$_SERVER['REMOTE_ADDR'].":".$_SERVER['REMOTE_PORT']."  ->  ".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."  ".$_SERVER['REQUEST_METHOD']."  ".microtime(1)."  Redirect >> '".$url."'\r\n",FILE_APPEND);			
 	header('location:'.$url);
 	exit;
 }
